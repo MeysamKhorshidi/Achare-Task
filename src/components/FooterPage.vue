@@ -2,11 +2,7 @@
   <footer>
     <div class="footer__container">
       <div class="footer__main">
-        <router-link
-          to="/user"
-          class="footer__main-button"
-          @click="submitForm"
-        >
+        <router-link to="/user" class="footer__main-button" @click="submitForm">
           <span>ثبت و ادامه</span>
         </router-link>
       </div>

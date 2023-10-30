@@ -7,7 +7,6 @@
       </span>
       <form class="row mx-3 needs-validation" @submit="submitForm">
         <div class="mb-4 col-md-4 position-relative">
-          
           <label for="name" class="form-lable request-box__form-lable"
             >نام</label
           >
@@ -118,12 +117,12 @@
       </form>
     </div>
   </div>
-  <FooterPage @submitButtonClicked="submitForm" />
+  <FooterPage @submitButtonClicked="getData" />
 </template>
 
 <script>
 import FooterPage from "@/components/FooterPage.vue";
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   components: {
@@ -136,12 +135,22 @@ export default {
       phone: "",
       phone2: "",
       address: "",
-      gender: 'male',
+      gender: "male",
     };
   },
   methods: {
     submitForm() {
-      
+      const data = {
+        first_name: this.name,
+        last_name: this.lastname,
+        coordinate_mobile: this.phone,
+        coordinate_phone_number: this.phone2,
+        address: this.address,
+        gender: this.gender,
+        lat: '33.88415383679746',
+        lng: '45.639272332191474',
+        region: `1`,
+      };
 
       const url = "https://stage.achareh.ir/api/karfarmas/address";
       const headers = {
@@ -150,12 +159,32 @@ export default {
       };
 
       // Send the form data to the API
-      axios.get(url, { headers })
-        .then(response => {
+      axios
+        .post(url, { data }, { headers })
+        .then((response) => {
           console.log(response);
           // Handle the API response here
         })
-        .catch(error => {
+        .catch((error) => {
+          console.error(error);
+          // Handle any errors that occurred during the request
+        });
+    },
+    getData() {
+      const url = "https://stage.achareh.ir/api/karfarmas/address";
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: "Basic MDk4MjIyMjIyMjI6U2FuYTEyMzQ1Njc4",
+      };
+
+      // Send the form data to the API
+      axios
+        .get(url, { headers })
+        .then((response) => {
+          console.log(response);
+          // Handle the API response here
+        })
+        .catch((error) => {
           console.error(error);
           // Handle any errors that occurred during the request
         });
