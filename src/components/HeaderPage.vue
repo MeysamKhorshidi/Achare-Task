@@ -9,14 +9,12 @@
           <img class="img" src="@/assets/logo.png" />
           <ul class="navbar-nav">
             <li class="nav-item">
-              <router-link to="/" class="nav-link-right"
-                >ثبت آدرس</router-link
-              >
+              <router-link to="/" class="nav-link-right">ثبت آدرس</router-link>
             </li>
             <li class="nav-item nav-left">
               <router-link to="/users" class="nav-link-left">
-                مشاهده آدرس ها</router-link
-              >
+                مشاهده آدرس ها
+              </router-link>
             </li>
           </ul>
         </div>
@@ -26,7 +24,6 @@
 </template>
 
 <script>
-export default {};
 </script>
 
 <style scoped>
@@ -58,12 +55,41 @@ export default {};
   font-weight: 700;
   text-align: center;
 }
-.nav-link-right{
+.nav-link-right {
   color: var(--text-color);
   text-decoration: none;
 }
-.nav-link-left{
+.nav-link-left {
   color: var(--primary-color);
   text-decoration: none;
+}
+
+/*  Responsive  Mobile */
+
+@media (max-width: 375px) {
+  .navbar {
+    max-width: 375px;
+    height: 48px;
+  }
+  .img {
+    width: 45px;
+    height: 25px;
+    margin: 0 5px;
+  }
+  .navbar-nav {
+    margin: 0 5px;
+  }
+  .nav-item {
+    width: 63px;
+    height: 22px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 1px;
+    text-align: left;
+  }
+  .nav-left {
+    width: 133px;
+  }
 }
 </style>

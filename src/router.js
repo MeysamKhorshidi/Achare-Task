@@ -5,7 +5,7 @@ import UserPage from './pages/UserPage.vue'
 
 const routes = [
         { path: '/', name: 'RequestPage', component: RequestPage },
-        { path: '/:id', name: 'userId', component: LocationPage },
+        { path: '/location', name: 'userId', component: LocationPage },
         { path: '/users', name: 'UserPage', component: UserPage },
 
 ]

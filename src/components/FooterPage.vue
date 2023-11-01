@@ -2,9 +2,8 @@
   <footer>
     <div class="footer__container">
       <div class="footer__main">
-        <router-link to="/user" class="footer__main-button" @click="submitForm">
-          <span>ثبت و ادامه</span>
-        </router-link>
+        <slot></slot>
+      
       </div>
     </div>
   </footer>
@@ -13,12 +12,7 @@
 
 <script>
 export default {
-  methods: {
-    submitForm() {
-      // Emit an event to notify the parent component
-      this.$emit("submitButtonClicked");
-    },
-  },
+
 };
 </script>
 
@@ -41,17 +35,24 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.footer__main-button {
-  text-decoration: none;
-  color: rgba(255, 255, 255, 1);
-  width: 105px;
-  height: 22px;
 
-  font-family: Vazir;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 25px;
-  letter-spacing: 0px;
-  text-align: center;
+
+/*  Responsive  Mobile */
+@media (max-width: 375px) {
+  .footer__container {
+    max-width: 375px;
+    height: 80px;
+  }
+  .footer__main {
+    width: 343px;
+    height: 48px;
+    border-radius: 4px;
+  }
+  .footer__main-button {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 1);
+    width: 150px;
+    height: 25px;
+  }
 }
 </style>

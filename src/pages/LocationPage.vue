@@ -6,35 +6,33 @@
         layer-type="base"
         name="OpenStreetMap"
       ></l-tile-layer>
-      <l-marker :lat-lng="markerLatLng"></l-marker>
+      <l-marker
+        :lat-lng="markerLatLng"
+        draggable="true"
+        @update:lat-lng="getLatlng($event)"
+      ></l-marker>
     </l-map>
-    <!-- <i
-      class="fa-sharp fa-solid fa-location-dot location"
-      style="color: #f29c1f"
-    ></i> -->
   </div>
-  <FooterPage />
+  <FooterPage>
+    <router-link to="/infos" class="footer__main-button">
+      <span>ثبت و ادامه</span>
+    </router-link>
+  </FooterPage>
 </template>
       
-      <script>
+      <script setup>
 import "leaflet/dist/leaflet.css";
 import { LMap, LTileLayer, LMarker } from "@vue-leaflet/vue-leaflet";
 import FooterPage from "../components/FooterPage.vue";
+import { ref } from "vue";
 
-export default {
-  components: {
-    LMap,
-    LTileLayer,
-    LMarker,
-    FooterPage,
-  },
-  data() {
-    return {
-      zoom: 2,
-      markerLatLng: [47.31322, -1.319482],
-    };
-  },
+const zoom = ref(3);
+const markerLatLng = ref([35.7286770448517, 51.37207031250001]);
+
+const getLatlng = (e) => {
+  console.log(e);
 };
+
 </script>
       
       <style>
@@ -46,6 +44,19 @@ export default {
   top: 255px;
   left: 1025px;
   z-index: 10000;
+}
+.footer__main-button {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 1);
+  width: 105px;
+  height: 22px;
+
+  font-family: Vazir;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 25px;
+  letter-spacing: 0px;
+  text-align: center;
 }
 </style>
      

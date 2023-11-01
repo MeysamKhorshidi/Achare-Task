@@ -1,6 +1,6 @@
 <template>
   <div class="request-box">
-    <span>ثبت آدرس</span>
+    <span class="request-box-header">ثبت آدرس</span>
     <div class="request-box__form">
       <span class="request-box__form-title col-md-12">
         لطفا مشخصات و آدرس خود را وارد کنید
@@ -16,9 +16,10 @@
             class="form-control"
             placeholder="مثال رضا"
             required
+            
           />
-          <div class="invalid-tooltip">نام باید دارای 3 کاراکتر باشد</div>
-          <div class="request-box__form-title-icon">
+          <div class="request-box__form-title-tooltip" v-if="name > '0' && name.length <'3' " >نام باید دارای 3 کاراکتر باشد</div>
+          <div class="request-box__form-title-icon" v-if="name != '' ">
             <i class="fa-solid fa-circle-xmark" style="color: #757575"></i>
           </div>
         </div>
@@ -32,10 +33,10 @@
             class="form-control"
             placeholder="مثال: رضایی"
           />
-          <div class="request-box__form-title-tooltip">
+          <div class="request-box__form-title-tooltip" v-if="lastname > '0' && lastname.length <'3' " >
             نام خانوادگی باید دارای 3 کاراکتر باشد
           </div>
-          <div class="request-box__form-title-icon">
+          <div class="request-box__form-title-icon" v-if="lastname != '' ">
             <i class="fa-solid fa-circle-xmark" style="color: #757575"></i>
           </div>
         </div>
@@ -49,10 +50,10 @@
             class="form-control"
             placeholder=" مثال: ۰۹۱۲۱۲۳۴۵۶۷"
           />
-          <div class="request-box__form-title-tooltip">
+          <div class="request-box__form-title-tooltip" v-if="phone > '0' && phone.length <= '11'" >
             شماره وارد شده صحیح نمی باشد
           </div>
-          <div class="request-box__form-title-icon">
+          <div class="request-box__form-title-icon" v-if="phone != '' ">
             <i class="fa-solid fa-circle-xmark" style="color: #757575"></i>
           </div>
         </div>
@@ -66,22 +67,22 @@
             class="form-control"
             placeholder="مثال: ۰۲۱۱۲۳۴۵۶۷"
           />
-          <div class="request-box__form-title-tooltip">
+          <!-- <div class="request-box__form-title-tooltip">
             شماره وارد شده صحیح نمی باشد
-          </div>
-          <div class="request-box__form-title-icon">
+          </div> -->
+          <div class="request-box__form-title-icon" v-if="phone2 != '' ">
             <i class="fa-solid fa-circle-xmark" style="color: #757575"></i>
           </div>
         </div>
-        <div class="mb-5 col-md-8 position-relative">
+        <div class="mb-4 col-md-8 position-relative">
           <label for="adress" class="form-lable request-box__form-lable"
             >آدرس</label
           >
           <input type="text" class="form-control" v-model="address" />
-          <div class="request-box__form-title-tooltip">
+          <div class="request-box__form-title-tooltip" v-if="address > '0' && address.length < '10'">
             آدرس باید دارای 10 کاراکتر باشد
           </div>
-          <div class="request-box__form-title-icon">
+          <div class="request-box__form-title-icon" v-if="address != '' ">
             <i class="fa-solid fa-circle-xmark" style="color: #757575"></i>
           </div>
         </div>
@@ -117,40 +118,40 @@
       </form>
     </div>
   </div>
-  <FooterPage @submitButtonClicked="getData" />
+  <FooterPage  >
+    <router-link to="/location" class="footer__main-button" @click="submitForm">
+          <span>ثبت و ادامه</span>
+        </router-link>
+  </FooterPage>
 </template>
 
-<script>
+<script setup>
 import FooterPage from "@/components/FooterPage.vue";
 import axios from "axios";
+import {ref} from 'vue'
 
-export default {
-  components: {
-    FooterPage,
-  },
-  data() {
-    return {
-      name: "",
-      lastname: "",
-      phone: "",
-      phone2: "",
-      address: "",
-      gender: "male",
-    };
-  },
-  methods: {
-    submitForm() {
-      const data = {
-        first_name: this.name,
-        last_name: this.lastname,
-        coordinate_mobile: this.phone,
-        coordinate_phone_number: this.phone2,
-        address: this.address,
-        gender: this.gender,
-        lat: '33.88415383679746',
-        lng: '45.639272332191474',
-        region: `1`,
+     const name=ref("")
+     const lastname=ref("")
+     const phone=ref("")
+     const phone2=ref("")
+     const address=ref("")
+     const gender=ref("female")
+      
+  
+     const data = {
+        first_name:name,
+        last_name:lastname,
+        coordinate_mobile:phone,
+        coordinate_phone_number:phone2,
+        address:address,
+        gender:gender,
+        lat: "33.88415383679746",
+        lng: "45.639272332191474",
+        region: 1,
       };
+
+   const submitForm =() =>{
+    
 
       const url = "https://stage.achareh.ir/api/karfarmas/address";
       const headers = {
@@ -169,28 +170,31 @@ export default {
           console.error(error);
           // Handle any errors that occurred during the request
         });
-    },
-    getData() {
-      const url = "https://stage.achareh.ir/api/karfarmas/address";
-      const headers = {
-        "Content-Type": "application/json",
-        Authorization: "Basic MDk4MjIyMjIyMjI6U2FuYTEyMzQ1Njc4",
-      };
+    }
 
-      // Send the form data to the API
-      axios
-        .get(url, { headers })
-        .then((response) => {
-          console.log(response);
-          // Handle the API response here
-        })
-        .catch((error) => {
-          console.error(error);
-          // Handle any errors that occurred during the request
-        });
-    },
-  },
-};
+
+    // const getData = () => {
+    //   const url = "https://stage.achareh.ir/api/karfarmas/address";
+    //   const headers = {
+    //     "Content-Type": "application/json",
+    //     Authorization: "Basic MDk4MjIyMjIyMjI6U2FuYTEyMzQ1Njc4",
+    //   };
+
+    //   // Send the form data to the API
+    //   axios
+    //     .get(url, { headers })
+    //     .then((response) => {
+    //       console.log(response);
+    //       // Handle the API response here
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //       // Handle any errors that occurred during the request
+    //     });
+    // }
+
+   
+
 </script>
 
 <style>
@@ -236,13 +240,13 @@ export default {
   line-height: 32px;
   color: var(--secendary-color);
   text-align: right;
-  opacity: 0;
+  opacity: 1;
 }
 .request-box__form-title-icon {
   position: absolute;
   top: 32px;
   left: 22px;
-  opacity: 0;
+  opacity: 1;
 }
 
 .check-box-gender {
@@ -272,5 +276,95 @@ export default {
   line-height: 22px;
   letter-spacing: 0px;
   text-align: right;
+}
+.footer__main-button {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 1);
+  width: 105px;
+  height: 22px;
+
+  font-family: Vazir;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 25px;
+  letter-spacing: 0px;
+  text-align: center;
+}
+
+/*  Responsive  Mobile */
+
+@media (max-width: 375px) {
+  .request-box {
+    width: 375px;
+    height: 620px;
+    margin: 10px auto;
+  }
+  .request-box-header {
+   margin: 0 20px;
+  }
+
+  .request-box__form {
+    width: 343px;
+    height: 599px;
+    margin: 0 16px;
+  }
+  .request-box__form-title {
+    display: block;
+    width: 313px;
+    height: 20px;
+    margin:6px 20px;
+    font-size: 12px;
+  }
+  .request-box__form-lable {
+ 
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18.75px;
+  }
+  .form-control{
+    width: 311px !important;
+    margin: 0 -10px;
+  }
+
+
+  /* .request-box__form-title-tooltip {
+    width: 222px;
+    height: 22px;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 32px;
+    color: var(--secendary-color);
+    text-align: right;
+    opacity: 1;
+  } */
+  .request-box__form-title-icon {
+    left: 10px;
+  }
+
+
+
+  /* .check-box-gender {
+    width: 249px;
+    height: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  } */
+  .check-box-gender__title {
+    width: 79.49px;
+height: 19px;
+font-size: 12px;
+    color: var(--text-color);
+    line-height: 18.75px;
+  }
+  .check-box-gender__menu {
+    width: 133px;
+    height: 19px;
+    display: flex;
+    justify-content: space-evenly;
+    font-family: Vazir;
+    font-size: 12px;
+    line-height: 18.75px;
+  }
 }
 </style>
