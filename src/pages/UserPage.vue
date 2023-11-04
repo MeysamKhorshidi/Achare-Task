@@ -76,7 +76,9 @@
           <span>جنسیت</span>
         </div>
         <div class="user-box-mobile__info">
-          <span>{{info.gender}}</span>
+          <span v-if="info.gender">{{info.gender}}</span>
+          <span v-else>-</span>
+
         </div>
       </div>
       <div class="col-md-12 user-box-mobile__form">
@@ -92,7 +94,8 @@
           <span>شماره تلفن ثابت</span>
         </div>
         <div class="user-box-mobile__info">
-          <span>{{info.coordinate_phone_number}} </span>
+          <span v-if="info.coordinate_phone_number">{{info.coordinate_phone_number}} </span>
+          <span v-else>- </span>
         </div>
       </div>
 
@@ -116,6 +119,7 @@ export default {
   setup() {
     const infos = ref();
 
+    //Function that is get deta to show
     async function getData() {
       const url = "https://stage.achareh.ir/api/karfarmas/address";
       const headers = {
@@ -134,7 +138,7 @@ export default {
         })
         .catch((error) => {
           console.error(error);
-          // Handle any errors that occurred during the request
+         
         });
     }
     console.log(infos);
@@ -147,6 +151,7 @@ export default {
 
 
 <style>
+/*--------------------  Responsive  Desktop------------------ */
 .users-box-mobile {
   display: none ;
 }
@@ -191,7 +196,7 @@ export default {
   color: #9b9b9b;
 }
 .users-box__info {
-  /* width: 134px; */
+
   height: 25px;
   margin-top: 10px;
   padding-right: 15px;
@@ -203,7 +208,7 @@ export default {
   text-align: right;
   color: #37474f;
 }
-
+/*--------------------  Responsive  Mobile------------------ */
 @media (max-width: 375px) {
   .users-box {
     width: 375px;
@@ -211,17 +216,7 @@ export default {
     margin: 10px auto;
     padding: 0 22px;
   }
-  /* .users-box_header {
-  width: 301px;
-  height: 32px;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 32px;
-  letter-spacing: 0px;
-  text-align: right;
-  color: #37474f;
-} */
-  .users-box__container {
+.users-box__container {
     width: 343px;
     height: 267px;
     display: none !important;
@@ -263,8 +258,7 @@ export default {
     text-align: left;
     color: #37474f;
   }
-  .user-box-mobile__form-adress {
-  }
+
   .user-box-mobile__info-adress {
     text-align: right;
   }

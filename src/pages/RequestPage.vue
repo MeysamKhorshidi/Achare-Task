@@ -5,6 +5,8 @@
       <span class="request-box__form-title col-md-12">
         لطفا مشخصات و آدرس خود را وارد کنید
       </span>
+
+      <!-- Form input datas -->
       <form class="row mx-3 needs-validation" @submit="submitForm">
         <div class="mb-4 col-md-4 position-relative">
           <label for="name" class="form-lable request-box__form-lable"
@@ -15,11 +17,15 @@
             type="text"
             class="form-control"
             placeholder="مثال رضا"
-            required
-            
+            :style="{ 'border-color': name.length > 0 && name.length < 3 ? 'red' : ''}"
           />
-          <div class="request-box__form-title-tooltip" v-if="name > '0' && name.length <'3' " >نام باید دارای 3 کاراکتر باشد</div>
-          <div class="request-box__form-title-icon" v-if="name != '' ">
+          <div
+            class="request-box__form-title-tooltip"
+            v-if="name > '0' && name.length < '3'"
+          >
+            نام باید دارای 3 کاراکتر باشد
+          </div>
+          <div class="request-box__form-title-icon" v-if="name != ''">
             <i class="fa-solid fa-circle-xmark" style="color: #757575"></i>
           </div>
         </div>
@@ -32,11 +38,15 @@
             v-model="lastname"
             class="form-control"
             placeholder="مثال: رضایی"
+            :style="{ 'border-color': lastname.length > 0 && lastname.length < 3 ? 'red' : ''}"
           />
-          <div class="request-box__form-title-tooltip" v-if="lastname > '0' && lastname.length <'3' " >
+          <div
+            class="request-box__form-title-tooltip"
+            v-if="lastname > '0' && lastname.length < '3'"
+          >
             نام خانوادگی باید دارای 3 کاراکتر باشد
           </div>
-          <div class="request-box__form-title-icon" v-if="lastname != '' ">
+          <div class="request-box__form-title-icon" v-if="lastname != ''">
             <i class="fa-solid fa-circle-xmark" style="color: #757575"></i>
           </div>
         </div>
@@ -49,11 +59,15 @@
             type="text"
             class="form-control"
             placeholder=" مثال: ۰۹۱۲۱۲۳۴۵۶۷"
+            :style="{ 'border-color': phone.length > 0 && phone.length < 11 ? 'red' : ''}"
           />
-          <div class="request-box__form-title-tooltip" v-if="phone > '0' && phone.length <= '11'" >
+          <div
+            class="request-box__form-title-tooltip"
+            v-if="phone > '0' && phone.length <= '11'"
+          >
             شماره وارد شده صحیح نمی باشد
           </div>
-          <div class="request-box__form-title-icon" v-if="phone != '' ">
+          <div class="request-box__form-title-icon" v-if="phone != ''">
             <i class="fa-solid fa-circle-xmark" style="color: #757575"></i>
           </div>
         </div>
@@ -67,22 +81,23 @@
             class="form-control"
             placeholder="مثال: ۰۲۱۱۲۳۴۵۶۷"
           />
-          <!-- <div class="request-box__form-title-tooltip">
-            شماره وارد شده صحیح نمی باشد
-          </div> -->
-          <div class="request-box__form-title-icon" v-if="phone2 != '' ">
+
+          <div class="request-box__form-title-icon" v-if="phone2 != ''">
             <i class="fa-solid fa-circle-xmark" style="color: #757575"></i>
           </div>
         </div>
         <div class="mb-4 col-md-8 position-relative">
-          <label for="adress" class="form-lable request-box__form-lable"
+          <label for="address" class="form-lable request-box__form-lable"
             >آدرس</label
           >
-          <input type="text" class="form-control" v-model="address" />
-          <div class="request-box__form-title-tooltip" v-if="address > '0' && address.length < '10'">
+          <input type="text" class="form-control" v-model="address"  :style="{ 'border-color': address.length > 0 && address.length < 10 ? 'red' : ''}" />
+          <div
+            class="request-box__form-title-tooltip"
+            v-if="address > '0' && address.length < '10'"
+          >
             آدرس باید دارای 10 کاراکتر باشد
           </div>
-          <div class="request-box__form-title-icon" v-if="address != '' ">
+          <div class="request-box__form-title-icon" v-if="address != ''">
             <i class="fa-solid fa-circle-xmark" style="color: #757575"></i>
           </div>
         </div>
@@ -91,117 +106,95 @@
             <div class="check-box-gender__title"><span>جنسیت</span></div>
             <div class="check-box-gender__menu">
               <input
-                v-model="female"
+                v-model="gender"
                 class="form-check-input"
                 type="radio"
-                name="exampleRadios"
-                id="exampleRadios1"
-                value="option1"
+                name="gender"
+                id="female"
+                value="female"
                 checked
               />
-              <label class="form-check-label" for="exampleRadios1">
+              <label class="form-check-label" for="female">
                 خانم
               </label>
               <input
-                v-model="male"
+                v-model="gender"
                 class="form-check-input"
                 type="radio"
-                name="exampleRadios"
-                id="exampleRadios2"
-                value="option2"
+                name="gender"
+                id="male"
+                value="male"
                 checked
               />
-              <label class="form-check-label" for="exampleRadios2"> آقا </label>
+              <label class="form-check-label" for="male"> آقا </label>
             </div>
           </div>
         </div>
       </form>
     </div>
   </div>
-  <FooterPage  >
-    <router-link to="/location" class="footer__main-button" @click="submitForm">
-          <span>ثبت و ادامه</span>
-        </router-link>
+
+  <FooterPage>
+    <button  class="footer__main-button" @click="submitData">
+      <span>ثبت و ادامه</span>
+    </button>
   </FooterPage>
 </template>
 
 <script setup>
 import FooterPage from "@/components/FooterPage.vue";
-import axios from "axios";
-import {ref} from 'vue'
+import { useRouter } from "vue-router";
+import { defineEmits, defineProps } from "vue";
 
-     const name=ref("")
-     const lastname=ref("")
-     const phone=ref("")
-     const phone2=ref("")
-     const address=ref("")
-     const gender=ref("female")
-      
-  
-     const data = {
-        first_name:name,
-        last_name:lastname,
-        coordinate_mobile:phone,
-        coordinate_phone_number:phone2,
-        address:address,
-        gender:gender,
-        lat: "33.88415383679746",
-        lng: "45.639272332191474",
-        region: 1,
-      };
+import { ref } from "vue";
 
-   const submitForm =() =>{
-    
+defineProps(["value"]);
+const emit = defineEmits(["update:value"]);
+const router = useRouter();
 
-      const url = "https://stage.achareh.ir/api/karfarmas/address";
-      const headers = {
-        "Content-Type": "application/json",
-        Authorization: "Basic MDk4MjIyMjIyMjI6U2FuYTEyMzQ1Njc4",
-      };
+const name = ref("");
+const lastname = ref("");
+const phone = ref("");
+const phone2 = ref("");
+const address = ref("");
+const gender = ref("");
 
-      // Send the form data to the API
-      axios
-        .post(url, { data }, { headers })
-        .then((response) => {
-          console.log(response);
-          // Handle the API response here
-        })
-        .catch((error) => {
-          console.error(error);
-          // Handle any errors that occurred during the request
-        });
-    }
+const data = {
+  first_name: name,
+  last_name: lastname,
+  coordinate_mobile: phone,
+  coordinate_phone_number: phone2,
+  address: address,
+  gender: gender,
+};
+//  The function is get form information
 
+const submitData = () => {
+  if (
+    name.value.length < 3 ||
+    lastname.value.length < 3 ||
+    phone.value.length < 11 ||
+    address.value.length < 10
+  ) {
+    // Display an error message or perform any required action
+    console.error("Please fill in all required fields.");
+    return; 
+  }
 
-    // const getData = () => {
-    //   const url = "https://stage.achareh.ir/api/karfarmas/address";
-    //   const headers = {
-    //     "Content-Type": "application/json",
-    //     Authorization: "Basic MDk4MjIyMjIyMjI6U2FuYTEyMzQ1Njc4",
-    //   };
-
-    //   // Send the form data to the API
-    //   axios
-    //     .get(url, { headers })
-    //     .then((response) => {
-    //       console.log(response);
-    //       // Handle the API response here
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //       // Handle any errors that occurred during the request
-    //     });
-    // }
-
-   
-
+  emit("update:value", data);
+  router.push("/location");
+};
 </script>
 
-<style>
+<style scoped>
+/*--------------------  Responsive  Desktop------------------ */
 .request-box {
   width: 808px;
   height: 407px;
-  margin: 57px auto;
+  margin: 33px auto;
+}
+.input-valid {
+  border-color: green;
 }
 
 .request-box__form {
@@ -212,6 +205,7 @@ import {ref} from 'vue'
   box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(237, 240, 242, 1);
 }
+
 .request-box__form-title {
   display: block;
   width: 603px;
@@ -224,6 +218,7 @@ import {ref} from 'vue'
   text-align: right;
   color: var(--text-color);
 }
+
 .request-box__form-lable {
   color: var(--text-color);
   font-size: 14px;
@@ -232,6 +227,7 @@ import {ref} from 'vue'
   letter-spacing: 0px;
   text-align: right;
 }
+
 .request-box__form-title-tooltip {
   width: 222px;
   height: 22px;
@@ -242,6 +238,7 @@ import {ref} from 'vue'
   text-align: right;
   opacity: 1;
 }
+
 .request-box__form-title-icon {
   position: absolute;
   top: 32px;
@@ -256,6 +253,7 @@ import {ref} from 'vue'
   justify-content: space-between;
   align-items: center;
 }
+
 .check-box-gender__title {
   width: 80px;
   height: 22px;
@@ -265,6 +263,11 @@ import {ref} from 'vue'
   letter-spacing: 0px;
   text-align: right;
 }
+.form-check-input:checked {
+    background-color:var(--primary-color);
+    border-color: var(--primary-color);
+}
+
 .check-box-gender__menu {
   width: 122px;
   height: 22px;
@@ -277,12 +280,14 @@ import {ref} from 'vue'
   letter-spacing: 0px;
   text-align: right;
 }
+
 .footer__main-button {
   text-decoration: none;
+  border: none;
+  background-color: var(--primary-color);
   color: rgba(255, 255, 255, 1);
   width: 105px;
   height: 22px;
-
   font-family: Vazir;
   font-size: 16px;
   font-weight: 700;
@@ -291,7 +296,7 @@ import {ref} from 'vue'
   text-align: center;
 }
 
-/*  Responsive  Mobile */
+/*--------------------  Responsive  Mobile------------------ */
 
 @media (max-width: 375px) {
   .request-box {
@@ -299,8 +304,9 @@ import {ref} from 'vue'
     height: 620px;
     margin: 10px auto;
   }
+
   .request-box-header {
-   margin: 0 20px;
+    margin: 0 20px;
   }
 
   .request-box__form {
@@ -308,55 +314,38 @@ import {ref} from 'vue'
     height: 599px;
     margin: 0 16px;
   }
+
   .request-box__form-title {
     display: block;
     width: 313px;
     height: 20px;
-    margin:6px 20px;
+    margin: 6px 20px;
     font-size: 12px;
   }
+
   .request-box__form-lable {
- 
     font-size: 12px;
     font-weight: 500;
     line-height: 18.75px;
   }
-  .form-control{
+
+  .form-control {
     width: 311px !important;
     margin: 0 -10px;
   }
 
-
-  /* .request-box__form-title-tooltip {
-    width: 222px;
-    height: 22px;
-    font-size: 10px;
-    font-weight: 400;
-    line-height: 32px;
-    color: var(--secendary-color);
-    text-align: right;
-    opacity: 1;
-  } */
   .request-box__form-title-icon {
     left: 10px;
   }
 
-
-
-  /* .check-box-gender {
-    width: 249px;
-    height: 22px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  } */
   .check-box-gender__title {
     width: 79.49px;
-height: 19px;
-font-size: 12px;
+    height: 19px;
+    font-size: 12px;
     color: var(--text-color);
     line-height: 18.75px;
   }
+
   .check-box-gender__menu {
     width: 133px;
     height: 19px;
